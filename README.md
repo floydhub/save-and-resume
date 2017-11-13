@@ -31,7 +31,7 @@ In this type of training regime is a common pratice to save multiple checkpoints
 The tradeoff is between the **frequency** and the **number of checkpoints files** to keep. Let's take a look what's happened when we act over these two parameters:
 
 Frequency | Number of checkpoints to keep | Cons | Pro
--------------------------------------------------------
+--------- | ----------------------------- | ---- | ---
 High | High | You need a lot of space!! | You can resume very quickly in almost all the interesting training states
 High | Low | You could have lost preciuos states | Minimize the storage space you need
 Low | High | If some things happened between two checkpoints, it will cost you some time to retrieve it. | You can resume the experiments in a lot of interesting position.
