@@ -7,7 +7,7 @@ We will show you how to perform it on Tensorflow, Keras and PyTorch.
 
 ![save game screen FF-like](https://i.imgur.com/xdpSAzq.png)
 
-Image your experiments as a video game, sometimes you want to save your game or resume it from an existing state. Checkpoints in ML/DL are the same thing, you do not want to lose your experiments due to blackout, OS faults or other types of bad errors. Sometimes you want just to resume a particular state of the training for new experiments or try different things.
+Image your experiments as a video game, sometimes you want to save your game or resume it from an existing state. Checkpoints in Machine/Deep Learning experiments are the same thing, you do not want to lose your experiments due to blackout, OS faults or other types of bad errors. Sometimes you want just to resume a particular state of the training for new experiments or try different things. That's why you need checkpoints!
 
 Not to mention that without a checkpoint at the end of the training, you will have lost all the training!  Like finishing a game without saving at the end.
 

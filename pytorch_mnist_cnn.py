@@ -27,7 +27,7 @@ resume_weights = "/model/checkpoint.pth.tar"
 # CUDA?
 cuda = torch.cuda.is_available()
 
-# Seed for replicability
+# Seed for reproducibility
 torch.manual_seed(1)
 if cuda:
 	torch.cuda.manual_seed(1)
@@ -103,6 +103,7 @@ def save_checkpoint(state, is_best, filename='/output/checkpoint.pth.tar'):
 	if is_best:
 		print ("=> Saving a new best")
 		shutil.copyfile(filename, '/output/model_best.pth.tar')  # new best
+
 
 # MNIST Dataset (Images and Labels)
 # If you have not mounted the dataset, you can download it
