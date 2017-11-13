@@ -14,9 +14,8 @@ from keras.layers import Conv2D, MaxPooling2D
 from keras import backend as K
 from keras.callbacks import ModelCheckpoint
 
-# Saved model weights
+# Path to saved model weights(as hdf5)
 resume_weights = "/model/mnist-cnn-best.hdf5"
-
 
 # Hyper-parameters
 batch_size = 128
@@ -32,15 +31,15 @@ img_rows, img_cols = 28, 28
 
 # Reshape strategy according to backend
 if K.image_data_format() == 'channels_first':
-    x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)
-    x_test = x_test.reshape(x_test.shape[0], 1, img_rows, img_cols)
-    # 1 x 28 x 28 [number_of_channels (colors) x height x weight]
-    input_shape = (1, img_rows, img_cols)
+	x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)
+	x_test = x_test.reshape(x_test.shape[0], 1, img_rows, img_cols)
+	# 1 x 28 x 28 [number_of_channels (colors) x height x weight]
+	input_shape = (1, img_rows, img_cols)
 else:
-    x_train = x_train.reshape(x_train.shape[0], img_rows, img_cols, 1)
-    x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)
-    # 28 x 28 x 1 [height x weight x number_of_channels (colors)]
-    input_shape = (img_rows, img_cols, 1)
+	x_train = x_train.reshape(x_train.shape[0], img_rows, img_cols, 1)
+	x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)
+	# 28 x 28 x 1 [height x weight x number_of_channels (colors)]
+	input_shape = (img_rows, img_cols, 1)
 
 # Reshape, type, normalized, print
 x_train = x_train.astype('float32')
@@ -62,8 +61,8 @@ y_test = keras.utils.to_categorical(y_test, num_classes)
 # FC(_, 128)[ReLU][Dropout 0.5] -> FC(128, 10)[Softmax]
 model = Sequential()
 model.add(Conv2D(32, kernel_size=(3, 3),
-                 activation='relu',
-                 input_shape=input_shape))
+					activation='relu',
+					input_shape=input_shape))
 model.add(Conv2D(64, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
@@ -72,34 +71,36 @@ model.add(Dense(128, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(num_classes, activation='softmax'))
 
+model.summary()
 
-# If exists a best model, load it!
+# If exists a best model, load its weights!
 if os.path.isfile(resume_weights):
-  # load weights
-  model.load_weights(resume_weights)
-
+	print ("Resumed model's weights from {}".format(resume_weights))
+	# load weights
+	model.load_weights(resume_weights)
 
 # CEE, Adam
 model.compile(loss=keras.losses.categorical_crossentropy,
-              optimizer=keras.optimizers.Adam(),
-              metrics=['accuracy'])
+			optimizer=keras.optimizers.Adam(),
+			metrics=['accuracy'])
 
 # Checkpoint In the /output folder
-filepath="/output/mnist-cnn-best.hdf5"
+filepath = "/output/mnist-cnn-best.hdf5"
 
 # Keep only a single checkpoint, the best over test accuracy.
-checkpoint = ModelCheckpoint(filepath, monitor='val_acc',
-                                       verbose=1,
-                                       save_best_only=True,
-                                       mode='max')
+checkpoint = ModelCheckpoint(filepath,
+							monitor='val_acc',
+							verbose=1,
+							save_best_only=True,
+							mode='max')
 
 # Train
 model.fit(x_train, y_train,
-          batch_size=batch_size,
-          epochs=epochs,
-          verbose=1,
-          validation_data=(x_test, y_test),
-          callbacks=[checkpoint])
+				batch_size=batch_size,
+				epochs=epochs,
+				verbose=1,
+				validation_data=(x_test, y_test),
+				callbacks=[checkpoint])
 
 # Eval
 score = model.evaluate(x_test, y_test, verbose=0)
