@@ -97,12 +97,12 @@ def eval(model, optimizer, test_loader):
 
 
 def save_checkpoint(state, is_best, filename='/output/checkpoint.pth.tar'):
-	"""Save model checkpoint every epoch and keep track of the best one"""
-	print ("=> Saving")
-	torch.save(state, filename)  # save checkpoiny
+	"""Save checkpoint if a new best is achieved"""
 	if is_best:
 		print ("=> Saving a new best")
-		shutil.copyfile(filename, '/output/model_best.pth.tar')  # new best
+		torch.save(state, filename)  # save checkpoint
+	else:
+		print ("=> Validation Accuracy did not improve")
 
 
 # MNIST Dataset (Images and Labels)
@@ -188,7 +188,6 @@ if os.path.isfile(resume_weights):
 								loc: storage)
 	start_epoch = checkpoint['epoch']
 	best_accuracy = checkpoint['best_accuracy']
-	optimizer.load_state_dict(checkpoint['optimizer'])
 	model.load_state_dict(checkpoint['state_dict'])
 	print("=> loaded checkpoint '{}' (trained for {} epochs)".format(resume_weights,
 		checkpoint['epoch']))
@@ -209,6 +208,5 @@ for epoch in range(num_epochs):
 	save_checkpoint({
 		'epoch': start_epoch + epoch + 1,
 		'state_dict': model.state_dict(),
-		'best_accuracy': best_accuracy,
-		'optimizer': optimizer.state_dict(),
+		'best_accuracy': best_accuracy
 	}, is_best)
