@@ -207,12 +207,12 @@ Resuming:
 floyd run \
     --gpu \
     --env tensorflow-1.3 \
-    --data redeipirati/projects/save-and-resume/<jobs>/output:/model \
+    --data <your-username>/projects/save-and-resume/<jobs>/output:/model \
     'python keras_mnist_cnn.py'
 ```
 
 - The `--env` flag specifies the environment that this project should run on, which is Tensorflow 1.3.0 + Keras 2.0.6 on Python3.6.
-- The second `--data` flag specifies that the output of a previus Job should be available at the `/model` directory
+- The `--data` flag specifies that the output of a previus Job should be available at the `/model` directory
 - Note that the `--gpu` flag is optional for now, unless you want to start right away to run the code on a GPU machine.
 
 
@@ -222,14 +222,14 @@ floyd run \
 floyd run \
     --gpu \
     --env tensorflow-1.3 \
-    --data redeipirati/projects/save-and-resume/<jobs>/output:/model \
     --mode jupyter
 ```
 
 - The `--env` flag specifies the environment that this project should run on, which is Tensorflow 1.3.0 + Keras 2.0.6 on Python3.6.
-- The second `--data` flag specifies that the output of a previus Job should be available at the `/model` directory
 - Note that the `--gpu` flag is optional for now, unless you want to start right away to run the code on a GPU machine.
 - The `--mode` flag specifies that this job should provide us a Jupyter notebook.
+
+Add `--data <your-username>/projects/save-and-resume/<jobs>/output:/model`, if you want to load a checkpoint from a previous Job.
 
 
 ## PyTorch
@@ -333,7 +333,7 @@ floyd run \
     --gpu \
     --env pytorch-0.2 \
     --data redeipirati/datasets/pytorch-mnist/1:input \
-    --data redeipirati/projects/save-and-resume/<jobs>/output:/model \
+    --data <your-username>/projects/save-and-resume/<jobs>/output:/model \
     'python pytorch_mnist_cnn.py'
 ```
 
@@ -356,6 +356,8 @@ floyd run \
 - The `--data` flag specifies that the pytorch-mnist dataset should be available at the `/input` directory
 - Note that the `--gpu` flag is optional for now, unless you want to start right away to run the code on a GPU machine.
 - The `--mode` flag specifies that this job should provide us a Jupyter notebook.
+
+Add `--data <your-username>/projects/save-and-resume/<jobs>/output:/model`, if you want to load a checkpoint from a previous Job.
 
 Have a great training :)
 
