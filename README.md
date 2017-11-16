@@ -105,7 +105,18 @@ The scipt will resum the checkpoint from the previus Job's Output.
 Let's see how to make it tangible for the different framework on FloydHub.
 
 ## Tensorflow
-Soon.
+![TF logo](https://www.tensorflow.org/_static/268f0926ba/images/tensorflow/lockup.png)
+
+### Saving
+
+### Resuming
+
+### Run on FloydHub
+Here's the steps to run the example on FloydHub.
+
+#### Via script
+
+#### Via Jupyter
 
 ## Keras
 
@@ -183,7 +194,7 @@ That's it about resuming a checkpoint in Keras.
 
 
 ### Run on FloydHub
-Here's the step to run the example on FloydHub.
+Here's the steps to run the example on FloydHub.
 
 #### Via script
 
@@ -307,7 +318,7 @@ For more info about loading GPU trained weights on CPU, see this [PyTorch discus
 That's it about resuming a checkpoint in PyTorch.
 
 ### Run on FloydHub
-Here's the step to run the example on FloydHub.
+Here's the steps to run the example on FloydHub.
 
 #### Via script
 
