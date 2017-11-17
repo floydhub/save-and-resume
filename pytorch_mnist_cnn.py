@@ -35,12 +35,12 @@ if cuda:
 
 def train(model, optimizer, train_loader, test_loader, loss_fn):
 	"""Perform a full training over dataset"""
+	average_time = 0
 	# Model train mode
 	model.train()
 	for i, (images, labels) in enumerate(train_loader):
 		# measure data loading time
 		batch_time = time.time()
-		# image unrolling
 		images = Variable(images)
 		labels = Variable(labels)
 
@@ -61,6 +61,8 @@ def train(model, optimizer, train_loader, test_loader, loss_fn):
 
 		# Measure elapsed time
 		batch_time = time.time() - batch_time
+		# Accumulate over batch
+		average_time += batch_time
 
 		# ### Keep track of metric every batch
 		# Accuracy Metric
@@ -76,21 +78,24 @@ def train(model, optimizer, train_loader, test_loader, loss_fn):
 					len(train_dataset) // batch_size,
 					loss.data[0],
 					accuracy,
-					batch_time))
+					average_time/print_every))  # Average
 
 
 def eval(model, optimizer, test_loader):
 	"""Eval over test set"""
 	model.eval()
 	correct = 0
+	# Get Batch
 	for data, target in test_loader:
 		data, target = Variable(data, volatile=True), Variable(target)
 		if cuda:
 			data, target = data.cuda(), target.cuda()
+		# Evaluate
 		output = model(data)
 		# Load output on CPU
 		if cuda:
 			output.cpu()
+		# Compute Accuracy
 		prediction = output.data.max(1)[1]
 		correct += prediction.eq(target.data).sum()
 	return correct
