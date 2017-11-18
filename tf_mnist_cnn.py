@@ -22,15 +22,18 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+from tensorflow.contrib.learn.python.learn.datasets.mnist import read_data_sets
+
 import numpy as np
 import tensorflow as tf
-import shutil, os
+import shutil
+import os
 
 tf.logging.set_verbosity(tf.logging.INFO)
 
 
 # Where to save Checkpoint(In the /output folder)
-resumepath ="/model/mnist_convnet_model"
+resumepath = "/model/mnist_convnet_model"
 filepath = "/output/mnist_convnet_model"
 
 # Hyper-parameters
@@ -44,7 +47,7 @@ if os.path.exists(resumepath):
     shutil.copytree(resumepath, filepath)
 
 # Load training and eval data
-mnist = tf.contrib.learn.datasets.load_dataset("mnist")
+mnist = read_data_sets(train_dir='/input/MNIST_data', validation_size=0)
 train_data = mnist.train.images  # Returns np.array
 train_labels = np.asarray(mnist.train.labels, dtype=np.int32)
 eval_data = mnist.test.images  # Returns np.array
@@ -150,7 +153,7 @@ def cnn_model_fn(features, labels, mode):
       mode=mode, loss=loss, eval_metric_ops=eval_metric_ops)
 
 # Checkpoint Strategy configuration
-run_config = tf.contrib.learn.RunConfig(
+run_config = tf.estimator.RunConfig(
     model_dir=filepath,
     keep_checkpoint_max=1)
 

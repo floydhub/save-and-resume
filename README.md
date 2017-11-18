@@ -107,14 +107,58 @@ Let's see how to make it tangible for the different framework on FloydHub.
 ## Tensorflow
 ![TF logo](https://www.tensorflow.org/_static/268f0926ba/images/tensorflow/lockup.png)
 
+Tensorflow provide different way for saving and resuming a checkpoint. In the example we will use the [tf.Estimator](https://www.tensorflow.org/api_docs/python/tf/estimator) API, that behind the scene uses [tf.train.Saver](https://www.tensorflow.org/api_docs/python/tf/train/Saver), [tf.train.CheckpointSaverHook](https://www.tensorflow.org/api_docs/python/tf/train/CheckpointSaverHook) tf.[saved_model.builder.SavedModelBuilder](https://www.tensorflow.org/api_docs/python/tf/saved_model/builder/SavedModelBuilder).
+
+More in detail, it uses the first function to save, the second one to act according to the adopted strategy and the last one to export the model to be served with `export_savedmodel()` method.
+
 ### Saving
 
+Before init an Estimator, we have to define the checkpoint strategy. To do this we have to create a configuration for the Estimator using the [tf.estimator.RunConfig](https://www.tensorflow.org/api_docs/python/tf/estimator/RunConfig) API such this:
+
+```python
+# Checkpoint Strategy configuration
+run_config = tf.estimator.RunConfig(
+    model_dir=filepath,
+    keep_checkpoint_max=1)
+```
+
+In this way we are telling the estimator in which directory save or resume a checkpoint and how many checkpoints to keep.
+
+Then we have to provide it, at the initialization of the Estimator:
+
+```python
+# Create the Estimator
+mnist_classifier = tf.estimator.Estimator(
+      model_fn=cnn_model_fn, config=run_config)
+```
+
+That's it about saving a checkpoint in Tensorflow using Estimator.
+
 ### Resuming
+
+After having configurated the Estimator, everything is done. If it will find a checkpoint inside the given model folder, it will load the last one.
+
+That's it about resuming a checkpoint in Tensorflow using Estimator.
 
 ### Run on FloydHub
 Here's the steps to run the example on FloydHub.
 
 #### Via script
+
+First time training:
+
+```bash
+floyd run \
+    --gpu \
+    --env tensorflow-1.3 \
+    --data redeipirati/datasets/mnist/1:input \
+    'python tf_mnist_cnn.py'
+```
+
+- The `--env` flag specifies the environment that this project should run on, which is Tensorflow 1.3.0 + Keras 2.0.6 on Python3.6.
+- The `--data` flag specifies that the pytorch-mnist dataset should be available at the `/input` directory
+- Note that the `--gpu` flag is optional for now, unless you want to start right away to run the code on a GPU machine.
+
 
 #### Via Jupyter
 
