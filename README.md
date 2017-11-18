@@ -105,7 +105,10 @@ The scipt will resum the checkpoint from the previus Job's Output.
 Let's see how to make it tangible for the different framework on FloydHub.
 
 ## Tensorflow
-![TF logo](https://www.tensorflow.org/_static/images/tensorflow/logo.png)
+
+<p align="center">
+    <img src="https://www.tensorflow.org/_static/images/tensorflow/logo.png">
+</p>
 
 Tensorflow provide different way for saving and resuming a checkpoint. In the example we will use the [tf.Estimator](https://www.tensorflow.org/api_docs/python/tf/estimator) API, that behind the scene uses [tf.train.Saver](https://www.tensorflow.org/api_docs/python/tf/train/Saver), [tf.train.CheckpointSaverHook](https://www.tensorflow.org/api_docs/python/tf/train/CheckpointSaverHook) tf.[saved_model.builder.SavedModelBuilder](https://www.tensorflow.org/api_docs/python/tf/saved_model/builder/SavedModelBuilder).
 
