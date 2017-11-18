@@ -155,12 +155,43 @@ floyd run \
     'python tf_mnist_cnn.py'
 ```
 
-- The `--env` flag specifies the environment that this project should run on, which is Tensorflow 1.3.0 + Keras 2.0.6 on Python3.6.
-- The `--data` flag specifies that the pytorch-mnist dataset should be available at the `/input` directory
+- The `--env` flag specifies the environment that this project should run on, which is Tensorflow 1.3.0 + Keras 2.0.6 on Python3.6,
+- The `--data` flag specifies that the pytorch-mnist dataset should be available at the `/input` directory,
+- Note that the `--gpu` flag is optional for now, unless you want to start right away to run the code on a GPU machine.
+
+Resuming:
+
+```bash
+floyd run \
+    --gpu \
+    --env tensorflow-1.3 \
+    --data redeipirati/datasets/mnist/1:input \
+    --data <your-username>/projects/save-and-resume/<jobs>/output:/model \
+    'python tf_mnist_cnn.py'
+```
+
+- The `--env` flag specifies the environment that this project should run on, which is Tensorflow 1.3.0 + Keras 2.0.6 on Python3.6,
+- The first `--data` flag specifies that the pytorch-mnist dataset should be available at the `/input` directory,
+- The second `--data` flag specifies that the output of a previus Job should be available at the `/model` directory,
 - Note that the `--gpu` flag is optional for now, unless you want to start right away to run the code on a GPU machine.
 
 
 #### Via Jupyter
+
+```bash
+floyd run \
+    --gpu \
+    --env tensorflow-1.3 \
+    --data redeipirati/datasets/mnist/1:input \
+    --mode jupyter
+```
+
+- The `--env` flag specifies the environment that this project should run on, which is Tensorflow 1.3.0 + Keras 2.0.6 on Python3.6.
+- The `--data` flag specifies that the pytorch-mnist dataset should be available at the `/input` directory,
+- Note that the `--gpu` flag is optional for now, unless you want to start right away to run the code on a GPU machine.
+- The `--mode` flag specifies that this job should provide us a Jupyter notebook.
+
+Add `--data <your-username>/projects/save-and-resume/<jobs>/output:/model`, if you want to load a checkpoint from a previous Job.
 
 ## Keras
 

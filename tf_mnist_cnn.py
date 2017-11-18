@@ -150,7 +150,7 @@ def cnn_model_fn(features, labels, mode):
       mode=mode, loss=loss, eval_metric_ops=eval_metric_ops)
 
 # Checkpoint Strategy configuration
-run_config = tf.estimator.RunConfig(
+run_config = tf.contrib.learn.RunConfig(
     model_dir=filepath,
     keep_checkpoint_max=1)
 
