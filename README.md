@@ -110,7 +110,7 @@ Let's see how to make it tangible for the different framework on FloydHub.
     <img src="https://www.tensorflow.org/_static/images/tensorflow/logo.png">
 </p>
 
-Tensorflow provide different way for saving and resuming a checkpoint. In the example we will use the [tf.Estimator](https://www.tensorflow.org/api_docs/python/tf/estimator) API, that behind the scene uses [tf.train.Saver](https://www.tensorflow.org/api_docs/python/tf/train/Saver), [tf.train.CheckpointSaverHook](https://www.tensorflow.org/api_docs/python/tf/train/CheckpointSaverHook) tf.[saved_model.builder.SavedModelBuilder](https://www.tensorflow.org/api_docs/python/tf/saved_model/builder/SavedModelBuilder).
+Tensorflow provide different way for saving and resuming a checkpoint. In the example we will use the [tf.Estimator](https://www.tensorflow.org/api_docs/python/tf/estimator) API, that behind the scene uses [tf.train.Saver](https://www.tensorflow.org/api_docs/python/tf/train/Saver), [tf.train.CheckpointSaverHook](https://www.tensorflow.org/api_docs/python/tf/train/CheckpointSaverHook) and [tf.saved_model.builder.SavedModelBuilder](https://www.tensorflow.org/api_docs/python/tf/saved_model/builder/SavedModelBuilder).
 
 More in detail, it uses the first function to save, the second one to act according to the adopted strategy and the last one to export the model to be served with `export_savedmodel()` method.
 
@@ -120,7 +120,7 @@ Before init an Estimator, we have to define the checkpoint strategy. To do this 
 
 ```python
 # Checkpoint Strategy configuration
-run_config = tf.estimator.RunConfig(
+run_config = tf.contrib.learn.RunConfig(
     model_dir=filepath,
     keep_checkpoint_max=1)
 ```
